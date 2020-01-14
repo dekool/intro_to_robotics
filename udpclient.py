@@ -7,7 +7,7 @@ import time
 import errno
 import threading
 from errnames import get_error_name
-"""
+
 def get_ip():
     from netifaces import interfaces, ifaddresses, AF_INET
     for interface in interfaces():
@@ -19,7 +19,7 @@ def get_ip():
         except KeyError:
             pass
     return '127.0.0.1'
-"""
+
 class RClient(object):
     """ 
     Robot python interface class
@@ -44,39 +44,38 @@ class RClient(object):
         
     def connect(self):
         """ Connect to server and create processing thread """
-        """
         try:
             self.recv_thread=threading.Thread(target=self.recv_loop)
             self.recv_thread.start()
             return True
-        except socket.error,e:
-            reason=get_error_name(e[0])
+        except socket.error as e:
+            reason=get_error_name(e.args[0])
             print("Socket Error: "+reason)
         return False
-        """
-        """   
+           
     def recv_loop(self):
         sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        sock.bind((self.ip,9209))
+        sock.bind((self.ip, 9209))
         sock.setblocking(0)
         while not self.done:
             try:
                 data, addr = sock.recvfrom(256)
-                if len(data)==0:
+                if len(data) == 0:
                     time.sleep(0.05)
                 else:
-                    #print "Received from '{}' data='{}'".format(addr,data)
+                    # print "Received from '{}' data='{}'".format(addr,data)
                     try:
-                        self.sensors=[float(s) for s in data.split()]
+                        self.sensors = [float(s) for s in data.split()]
                     except ValueError:
                         pass
-            except socket.error,e:
-                errnum=e[0]
-                if errnum!=errno.EAGAIN:
-                    reason=get_error_name(errnum)
-                    print "Socket Error ({}): {}".format(errnum,reason)
-                time.sleep(0.05)
-          """
+            except socket.error as e:
+                # import pdb; pdb.set_trace()
+                errnum = e.args[0]
+                if errnum != errno.EAGAIN:
+                    reason = get_error_name(errnum)
+                # print("Socket Error ({}): {}".format(errnum,reason))
+                time.sleep(0.5)
+          
             
     def sendmsg(self,msg):
         with self.lock:
@@ -137,7 +136,7 @@ def test():
             time.sleep(0.1)
             counter+=1
             #if (counter%10)==0:
-            print(r.sense())
+            #print(r.sense())
         r.terminate()
         print("Done")
         kbd_thread.join()
@@ -146,12 +145,13 @@ def test():
 
 
 if __name__=='__main__':
-    #test()
-    r = RClient("192.168.1.153", 2777)
-    for i in range(1000):
-        r.drive(1000, 1000)
-    print(r.sense())
-    time.sleep(2)
+    test()
+
+    # r = RClient("192.168.1.152", 2777)
+    # for i in range(1000):
+    #     r.drive(1000, 1000)
+    # print(r.sense())
+    # time.sleep(2)
     #r.terminate()
     #server - 192.168.1.200
 
