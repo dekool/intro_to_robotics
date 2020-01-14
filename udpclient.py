@@ -35,8 +35,8 @@ class RClient(object):
         
     """
     def __init__(self,host,port,user_deprecate='',id_deprecate=''):
-        #self.ip = get_ip()
-        self.ip = ''
+        self.ip = get_ip()
+        print(self.ip)
         self.robot=(host,port)
         self.lock=threading.RLock()
         self.done=False
@@ -118,7 +118,7 @@ def kbd():
 def test():
     global done
     global cmd
-    r=RClient("192.168.1.153",2777)
+    r=RClient("192.168.1.152",2777)
     counter=0
     if r.connect():
         kbd_thread=threading.Thread(target=kbd)
