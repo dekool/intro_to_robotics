@@ -402,9 +402,7 @@ def stop_following_obj(goal, current_position, obj_start_pos):
 
 def fix_to_parallel(r):
     r_result = r.sense()  # call sense only once
-    right_sense = r_result[4]
-    front_sense = r_result[5]
-    left_sense = r_result[6]
+    right_sense, front_sense, left_sense = r_result[4:]
     print("pass_obj: right_obs =", right_sense, "| front_obs =", front_sense, "| left_obs =", left_sense)
     while front_sense != -1:
         if right_sense < left_sense:
@@ -423,18 +421,30 @@ def fix_to_parallel(r):
         time.sleep(0.4)
 
         r_result = r.sense()  # call sense only once
-        right_sense = r_result[4]
-        front_sense = r_result[5]
-        left_sense = r_result[6]
+        right_sense, front_sense, left_sense = r_result[4:]
         print("pass_obj: right_obs =", right_sense, "| front_obs =", front_sense, "| left_obs =", left_sense)
+
+
+def move_parallel_to_obj(r):
+    r_result = r.sense()  # call sense only once
+    right_sense, front_sense, left_sense = r_result[4:]
+    print("right_obs =", right_sense, "| front_obs =", front_sense, "| left_obs =", left_sense)
+    while left_sense != -1:
+        if front_sense != -1 and front_sense < 500:
+            fix_to_parallel(r)
+        else:
+            r.drive(400, 400)
+        time.sleep(0.4)
+
+        r_result = r.sense()  # call sense only once
+        right_sense, front_sense, left_sense = r_result[4:]
+        print("right_obs =", right_sense, "| front_obs =", front_sense, "| left_obs =", left_sense)
 
 
 def follow_obj(goal, r):
     r_result = r.sense()  # call sense only once
     current_position = r_result[0:2]
-    right_sense = r_result[4]
-    front_sense = r_result[5]
-    left_sense = r_result[6]
+    right_sense, front_sense, left_sense = r_result[4:]
     obj_start_pos = current_position
     print(obj_start_pos[0], obj_start_pos[1])
     start_dist = math.sqrt((goal[0] - obj_start_pos[0]) ** 2 + (goal[1] - obj_start_pos[1]) ** 2)
@@ -442,23 +452,8 @@ def follow_obj(goal, r):
     fix_to_parallel(r)
     print("right_obs =", right_sense, "| front_obs =", front_sense, "| left_obs =", left_sense)
     print("done first while")
-    r_result = r.sense()  # call sense only once
-    right_sense = r_result[4]
-    front_sense = r_result[5]
-    left_sense = r_result[6]
-    print("right_obs =", right_sense, "| front_obs =", front_sense, "| left_obs =", left_sense)
-    first_left_sence = left_sense
-    while left_sense != -1:
-        r_result = r.sense()  # call sense only once
-        right_sense = r_result[4]
-        front_sense = r_result[5]
-        left_sense = r_result[6]
-        print("right_obs =", right_sense, "| front_obs =", front_sense, "| left_obs =", left_sense)
-        if front_sense != -1 and front_sense < 500:
-            fix_to_parallel(r)
-        else:
-            r.drive(400, 400)
-        time.sleep(0.4)
+    first_left_sense = left_sense
+    move_parallel_to_obj(r)
 
     print("done second while")
 
@@ -467,25 +462,19 @@ def follow_obj(goal, r):
     time.sleep(0.3)
     while left_sense == -1:
         r_result = r.sense()  # call sense only once
-        right_sense = r_result[4]
-        front_sense = r_result[5]
-        left_sense = r_result[6]
+        right_sense, front_sense, left_sense = r_result[4:]
         print("right_obs =", right_sense, "| front_obs =", front_sense, "| left_obs =", left_sense)
         r.drive(-400, 400)
         time.sleep(0.3)
     while left_sense != -1:
         r_result = r.sense()  # call sense only once
-        right_sense = r_result[4]
-        front_sense = r_result[5]
-        left_sense = r_result[6]
+        right_sense, front_sense, left_sense = r_result[4:]
         print("right_obs =", right_sense, "| front_obs =", front_sense, "| left_obs =", left_sense)
         r.drive(400, 400)
         time.sleep(0.3)
     while left_sense == -1:
         r_result = r.sense()  # call sense only once
-        right_sense = r_result[4]
-        front_sense = r_result[5]
-        left_sense = r_result[6]
+        right_sense, front_sense, left_sense = r_result[4:]
         print("right_obs =", right_sense, "| front_obs =", front_sense, "| left_obs =", left_sense)
         r.drive(-400, 400)
         time.sleep(0.3)
@@ -511,17 +500,13 @@ def follow_obj(goal, r):
     counter =0
     while cur_dist > start_dist and counter < 6:
         r_result = r.sense()  # call sense only once
-        right_sense = r_result[4]
-        front_sense = r_result[5]
-        left_sense = r_result[6]
+        right_sense, front_sense, left_sense = r_result[4:]
         print("right_obs =", right_sense, "| front_obs =", front_sense, "| left_obs =", left_sense)
         if front_sense != -1 and front_sense < 500:
             fix_to_parallel(r)
         while left_sense != -1:
             r_result = r.sense()  # call sense only once
-            right_sense = r_result[4]
-            front_sense = r_result[5]
-            left_sense = r_result[6]
+            right_sense, front_sense, left_sense = r_result[4:]
             current_position = r_result[0:2]
             cur_dist = math.sqrt((goal[0] - current_position[0]) ** 2 + (goal[1] - current_position[1]) ** 2)
             print("curr dist: " + str(cur_dist))
