@@ -441,6 +441,53 @@ def move_parallel_to_obj(r):
         print("right_obs =", right_sense, "| front_obs =", front_sense, "| left_obs =", left_sense)
 
 
+def turn_around_obj(r):
+    r_result = r.sense()  # call sense only once
+    right_sense, front_sense, left_sense = r_result[4:]
+    start_turn_orientation = [r_result[2], r_result[3]]
+    current_orientation = [r_result[2], r_result[3]]
+    # find angle between orientations
+    dot_product = np.matmul(start_turn_orientation, current_orientation)
+    theta = np.arccos(dot_product)
+    theta * 180 / math.pi  # convert to degrees
+    while left_sense == -1 and theta < 140:
+        print("right_obs =", right_sense, "| front_obs =", front_sense, "| left_obs =", left_sense)
+        if front_sense != -1:
+            print("new obj!!!")  # need to consider what to do
+        if left_sense != -1:
+            r.drive(400, -400)  # fix orientation
+        else:
+            r.drive(300, 600)  # slow turn
+        time.sleep(0.3)
+        # calculate details again
+        r_result = r.sense()  # call sense only once
+        right_sense, front_sense, left_sense = r_result[4:]
+        current_orientation = [r_result[2], r_result[3]]
+        # find angle between orientations
+        dot_product = np.matmul(start_turn_orientation, current_orientation)
+        theta = np.arccos(dot_product)
+        theta * 180 / math.pi  # convert to degrees
+
+    # print("right_obs =", right_sense, "| front_obs =", front_sense, "| left_obs =", left_sense)
+    # while left_sense == -1:
+    #     r_result = r.sense()  # call sense only once
+    #     right_sense, front_sense, left_sense = r_result[4:]
+    #     print("right_obs =", right_sense, "| front_obs =", front_sense, "| left_obs =", left_sense)
+    #     r.drive(-400, 400)
+    #     time.sleep(0.3)
+    # while left_sense != -1:
+    #     r_result = r.sense()  # call sense only once
+    #     right_sense, front_sense, left_sense = r_result[4:]
+    #     print("right_obs =", right_sense, "| front_obs =", front_sense, "| left_obs =", left_sense)
+    #     r.drive(400, 400)
+    #     time.sleep(0.3)
+    # while left_sense == -1:
+    #     r_result = r.sense()  # call sense only once
+    #     right_sense, front_sense, left_sense = r_result[4:]
+    #     print("right_obs =", right_sense, "| front_obs =", front_sense, "| left_obs =", left_sense)
+    #     r.drive(-400, 400)
+    #     time.sleep(0.3)
+
 def follow_obj(goal, r):
     r_result = r.sense()  # call sense only once
     current_position = r_result[0:2]
@@ -460,24 +507,27 @@ def follow_obj(goal, r):
     # pass the obj
     # r.drive(600, 600)
     time.sleep(0.3)
-    while left_sense == -1:
-        r_result = r.sense()  # call sense only once
-        right_sense, front_sense, left_sense = r_result[4:]
-        print("right_obs =", right_sense, "| front_obs =", front_sense, "| left_obs =", left_sense)
-        r.drive(-400, 400)
-        time.sleep(0.3)
-    while left_sense != -1:
-        r_result = r.sense()  # call sense only once
-        right_sense, front_sense, left_sense = r_result[4:]
-        print("right_obs =", right_sense, "| front_obs =", front_sense, "| left_obs =", left_sense)
-        r.drive(400, 400)
-        time.sleep(0.3)
-    while left_sense == -1:
-        r_result = r.sense()  # call sense only once
-        right_sense, front_sense, left_sense = r_result[4:]
-        print("right_obs =", right_sense, "| front_obs =", front_sense, "| left_obs =", left_sense)
-        r.drive(-400, 400)
-        time.sleep(0.3)
+    turn_around_obj(r)
+    # while left_sense == -1:
+    #     r_result = r.sense()  # call sense only once
+    #     right_sense, front_sense, left_sense = r_result[4:]
+    #     print("right_obs =", right_sense, "| front_obs =", front_sense, "| left_obs =", left_sense)
+    #     r.drive(-400, 400)
+    #     time.sleep(0.3)
+    # while left_sense != -1:
+    #     r_result = r.sense()  # call sense only once
+    #     right_sense, front_sense, left_sense = r_result[4:]
+    #     print("right_obs =", right_sense, "| front_obs =", front_sense, "| left_obs =", left_sense)
+    #     r.drive(400, 400)
+    #     time.sleep(0.3)
+    # while left_sense == -1:
+    #     r_result = r.sense()  # call sense only once
+    #     right_sense, front_sense, left_sense = r_result[4:]
+    #     print("right_obs =", right_sense, "| front_obs =", front_sense, "| left_obs =", left_sense)
+    #     r.drive(-400, 400)
+    #     time.sleep(0.3)
+
+
     # time.sleep(0.6)
     # r.drive(-600, 600)
     # time.sleep(0.4)
