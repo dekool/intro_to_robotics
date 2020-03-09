@@ -6,7 +6,7 @@ import json
 import time
 import errno
 import threading
-import matplotlib.pyplot as plt, mpld3
+import matplotlib.pyplot as plt
 from errnames import get_error_name
 import math
 import numpy as np
@@ -15,6 +15,7 @@ first = 1
 right_obs_arr = []
 front_obs_arr = []
 left_obs_arr = []
+map = np.zeros([700, 370], dtype=int)
 
 
 def get_ip():
@@ -162,55 +163,77 @@ def move_straight(goal, r):  # assuming no obs
         desired_orientation = [desired_orientation[0] / norm, desired_orientation[1] / norm]
         print("move_straight: itr", itr_cnt, " |  current_orientation = ", current_orientation,
               " |  desired_orientation = ", desired_orientation)
-
         # find angle between orientations
         dot_product = np.matmul(current_orientation, desired_orientation)
-        theta = np.arccos(dot_product)
-
-        # find rotation direction
+        theta = np.arccos(dot_product) * 180 / math.pi
         cross_product = np.cross(current_orientation, desired_orientation)
-        print("move_straight: itr", itr_cnt, " |  theta = ", theta * 180 / math.pi, " |  cross_product = ",
+        print("move_straight: itr", itr_cnt, " |  theta = ", theta, " |  cross_product = ",
               cross_product)
+        while not(0 < theta < 30):
+            # find rotation direction
+            cross_product = np.cross(current_orientation, desired_orientation)
+            print("move_straight: itr", itr_cnt, " |  theta = ", theta, " |  cross_product = ",
+                  cross_product)
 
-        # rotate robot
-        if 0 < theta < math.pi / 4:
-            rot_speed = 0
-        else:
-            rot_speed = (1000 / math.pi) * theta + 250  # find proportion empirically
-            rot_speed = min(rot_speed, 1000)
-            rot_speed = max(rot_speed, 350)
+            # rotate robot
+            # if 0 < theta < math.pi / 4:
+            #     rot_speed = 0
+            # else:
+            #     rot_speed = (1000 / math.pi) * theta + 250  # find proportion empirically
+            #     rot_speed = min(rot_speed, 1000)
+            #     rot_speed = max(rot_speed, 350)
+            rot_speed = 330
+            if cross_product > 0:
+                r.drive(rot_speed, -1 * rot_speed)
+            else:
+                r.drive(-1 * rot_speed, rot_speed)
+            time.sleep(0.3)
 
-        if cross_product > 0:
-            r.drive(rot_speed, -1 * rot_speed)
-        else:
-            r.drive(-1 * rot_speed, rot_speed)
-        time.sleep(0.4)
+            current_orientation = [r.sense()[2], r.sense()[3]]
+            desired_orientation = [goal[0] - r.sense()[0], goal[1] - r.sense()[1]]
+            norm = math.sqrt(desired_orientation[0] ** 2 + desired_orientation[1] ** 2)
+            desired_orientation = [desired_orientation[0] / norm, desired_orientation[1] / norm]
+            print("move_straight: itr", itr_cnt, " |  current_orientation = ", current_orientation,
+                  " |  desired_orientation = ", desired_orientation)
+            # find angle between orientations
+            dot_product = np.matmul(current_orientation, desired_orientation)
+            theta = np.arccos(dot_product) * 180 / math.pi
+            print("move_straight: itr", itr_cnt, " |  theta = ", theta)
+
+        right_obs = r.sense()[4]
         front_obs = r.sense()[5]
-        if -1 < front_obs < 70:
+        left_obs = r.sense()[6]
+        print("move_straight | distance to object: " + str(front_obs))
+        if -1 < front_obs < 40:  # or -1 < right_obs < 40 or -1 < left_obs < 40:
+            print("move_straight | front: ", front_obs, " left ", left_obs, "right: ", right_obs)
             print("move_straight | obstacle detected !")
             return
         # drive straight toward goal
-        higher_speed = 10 * norm  # find proportion empirically
-        higher_speed = min(higher_speed, 1000)
-        higher_speed = max(higher_speed, 350)
+        # higher_speed = 10 * norm  # find proportion empirically
+        higher_speed = 450
+        # higher_speed = min(higher_speed, 500)
+        # higher_speed = max(higher_speed, 350)
         lower_speed = higher_speed * (math.pi / 2 - theta) / (math.pi / 2)
-        lower_speed = min(lower_speed, 1000)
+        lower_speed = min(lower_speed, 500)
         lower_speed = max(lower_speed, 350)
+        if 40 < front_obs < 100:
+            higher_speed = 300
+            lower_speed = 300
         if cross_product > 0:
             r.drive(higher_speed, lower_speed)
         else:
             r.drive(lower_speed, higher_speed)
 
-        print("move_straight: itr", itr_cnt, " |  rot_speed = ", rot_speed, " |  higher_speed = ", higher_speed,
+        print("move_straight: itr", itr_cnt, " |  higher_speed = ", higher_speed,
               " |  lower_speed = ", lower_speed)
-        time.sleep(0.4)
+        time.sleep(0.5)
         # update current position
         current_position = [r.sense()[0], r.sense()[1]]
         print("move_straight: itr", itr_cnt, " |  current_position = ", current_position)
 
-        itr_cnt += 1
-        if itr_cnt > 50:
-            break
+        # itr_cnt += 1
+        # if itr_cnt > 50:
+        #     break
 
     print("move_straight: done. goal = ", goal, "current = ", current_position)
 
@@ -337,7 +360,7 @@ def update_map(previous_sense, current_sense):
 def test():
     global done
     global cmd
-    r = RClient("192.168.1.153", 2777)
+    r = RClient("192.168.1.152", 2777)
     # r.drive(1000, 1000)
     counter = 0
     # initiate params
@@ -346,7 +369,7 @@ def test():
     left_obs = 1000
     turned = False
     current_sense = [0, 0, 0, 0, 0]
-    goal = [100, 0]
+    goal = [0, -100]
     auto_drive = 0
 
     if r.connect():
@@ -360,6 +383,8 @@ def test():
                 if s[0] == 'k':
                     print("auto drive is ON")
                     auto_drive = 1
+                if s[0] == 'r':
+                    save_points_to_map(r)
                 move_manual(s, r)
 
             # move_straight(goal, r)
@@ -382,7 +407,7 @@ def test():
             if auto_drive == 1:
                 # exp_joanne(r)
                 # follow_obj(goal, r)
-                algorithm(goal)
+                algorithm(goal, r)
                 break
 
         plt.show()
@@ -393,8 +418,67 @@ def test():
         print("Failed to connect")
 
 
-def object_seen():
-    return False
+def calculate_obj_point(r):
+    r_result = r.sense()  # call sense only once
+    current_position = r_result[0:2]
+    current_orientation = [r_result[2], r_result[3]]
+    right_sense, front_sense, left_sense = r_result[4:]
+    front_obj_pos, left_obj_pos, right_obj_pos = -1, -1, -1
+    if front_sense != -1:
+        front_obj_pos = [current_position[0] + current_orientation[0] * front_sense,
+                         current_position[1] + current_orientation[1] * front_sense]
+    if left_sense != -1:
+        # rotate by 45 degrees
+        fixed_orientation = [((current_orientation[0] + current_orientation[1]) / (math.sqrt(2))),
+                             ((current_orientation[1] - current_orientation[0]) / (math.sqrt(2)))]
+        left_obj_pos = [current_position[0] + fixed_orientation[0] * left_sense,
+                        current_position[1] + fixed_orientation[1] * left_sense]
+    if right_sense != -1:
+        # rotate by 45 degrees
+        fixed_orientation = [((current_orientation[0] - current_orientation[1]) / (math.sqrt(2))),
+                             ((current_orientation[0] + current_orientation[1]) / (math.sqrt(2)))]
+        right_obj_pos = [current_position[0] + fixed_orientation[0] * right_sense,
+                         current_position[1] + fixed_orientation[1] * right_sense]
+    print("left obj: " + str(left_obj_pos) + " front obj: " + str(front_obj_pos) + " right obj: " + str(right_obj_pos))
+    print("robot position: " + str(current_position))
+    return left_obj_pos, front_obj_pos, right_obj_pos
+
+
+def save_points_to_map(r):
+    """
+    boundries:
+    [-237.293, 93.4245]
+    [435.734, 81.745]
+    [153.742, -275.195]
+    [-46.4623, -277.982]
+
+    0 - unknown
+    1 - clear
+    2 - object
+    """
+    X_LOWER_FIX = 240
+    Y_LOWER_FIX = 280
+    left_obj_pos, front_obj_pos, right_obj_pos = calculate_obj_point(r)
+    r_result = r.sense()  # call sense only once
+    current_position = r_result[0:2]
+
+    # current position is empty
+    current_position = [math.floor(current_position[0]), math.floor(current_position[1])]
+    map[current_position[0] + X_LOWER_FIX, current_position[1] + Y_LOWER_FIX] = 1
+    map[current_position[0] + 1 + X_LOWER_FIX, current_position[1] + Y_LOWER_FIX] = 1
+    map[current_position[0] + X_LOWER_FIX, current_position[1] + 1 + Y_LOWER_FIX] = 1
+    map[current_position[0] + 1 + X_LOWER_FIX, current_position[1] + 1 + Y_LOWER_FIX] = 1
+
+    if left_obj_pos != -1:
+        left_obj_pos = [math.floor(left_obj_pos[0]), math.floor(left_obj_pos[1])]
+        map[left_obj_pos[0] + X_LOWER_FIX, left_obj_pos[1] + Y_LOWER_FIX] = 2
+        # we can add else - 100 units are clear
+    if front_obj_pos != -1:
+        front_obj_pos = [math.floor(front_obj_pos[0]), math.floor(front_obj_pos[1])]
+        map[front_obj_pos[0] + X_LOWER_FIX, front_obj_pos[1] + Y_LOWER_FIX] = 2
+    if right_obj_pos != -1:
+        right_obj_pos = [math.floor(right_obj_pos[0]), math.floor(right_obj_pos[1])]
+        map[right_obj_pos[0] + X_LOWER_FIX, right_obj_pos[1] + Y_LOWER_FIX] = 2
 
 
 def goal_reached(goal, current_position, tol):
@@ -413,7 +497,7 @@ def fix_to_parallel(r):
     right_sense, front_sense, left_sense = r_result[4:]
     print("fix_to_parallel | sensing...")
     print("fix_to_parallel | right_obs =", right_sense, "| front_obs =", front_sense, "| left_obs =", left_sense)
-    while front_sense != -1:
+    while front_sense != -1 and front_sense < 70:
         if right_sense < left_sense:
             theta = math.atan((front_sense * math.sin(135)) / (right_sense + front_sense * math.cos(135)))
         else:
@@ -421,9 +505,10 @@ def fix_to_parallel(r):
 
         print("fix_to_parallel | theta = ", (theta * 180 / math.pi))
         # rotate robot
-        rot_speed = (1000 / math.pi) * theta + 250  # find proportion empirically
-        rot_speed = min(rot_speed, 1000)
-        rot_speed = max(rot_speed, 350)
+        # rot_speed = (1000 / math.pi) * theta + 250  # find proportion empirically
+        # rot_speed = min(rot_speed, 1000)
+        # rot_speed = max(rot_speed, 300)
+        rot_speed = 320
         print("fix_to_parallel | rotate robot...")
         # print("fix_to_parallel | rot speed: ", rot_speed)
         r.drive(rot_speed, -1 * rot_speed)
@@ -437,29 +522,70 @@ def fix_to_parallel(r):
     print("fix_to_parallel | DONE")
 
 
+def fix_to_orthogonal(r, edge_of_obj):
+    rot_speed = 350
+    if edge_of_obj == -1:
+        return
+    r_result = r.sense()
+    current_position = [r_result[0], r_result[1]]
+    current_orientation = [r_result[2], r_result[3]]
+    radius_orientation = [edge_of_obj[0] - current_position[0], edge_of_obj[1] - current_position[1]]
+    norm = math.sqrt(radius_orientation[0] ** 2 + radius_orientation[1] ** 2)
+    radius_orientation = [radius_orientation[0] / norm, radius_orientation[1] / norm]
+    dot_product = np.matmul(current_orientation, radius_orientation)
+    old_theta = -1
+    theta = np.arccos(dot_product) * 180 / math.pi
+    print("fix_to_orthogonal | current_position = ", current_position)
+    print("fix_to_orthogonal | current_orientation = ", current_orientation)
+    print("fix_to_orthogonal | radius_orientation = ", radius_orientation)
+    print("fix_to_orthogonal | dot_product = ", dot_product, " theta = ", theta)
+    while theta < 70 or theta > 110:
+        if old_theta != theta:
+            r.drive(rot_speed, -1 * rot_speed)
+        print("fix_to_orthogonal | fixing orientation...")
+        r_result = r.sense()
+        current_position = [r_result[0], r_result[1]]
+        current_orientation = [r_result[2], r_result[3]]
+        radius_orientation = [edge_of_obj[0] - current_position[0], edge_of_obj[1] - current_position[1]]
+        norm = math.sqrt(radius_orientation[0] ** 2 + radius_orientation[1] ** 2)
+        radius_orientation = [radius_orientation[0] / norm, radius_orientation[1] / norm]
+        dot_product = np.matmul(current_orientation, radius_orientation)
+        old_theta = theta
+        theta = np.arccos(dot_product) * 180 / math.pi
+        print("fix_to_orthogonal | current_position = ", current_position)
+        print("fix_to_orthogonal | current_orientation = ", current_orientation)
+        print("fix_to_orthogonal | radius_orientation = ", radius_orientation)
+        print("fix_to_orthogonal | dot_product = ", dot_product, " theta = ", theta)
+        time.sleep(0.4)
+
+
 def move_parallel_to_obj(r):
     print("move_parallel_to_obj | START")
     r_result = r.sense()  # call sense only once
     right_sense, front_sense, left_sense = r_result[4:]
     print("move_parallel_to_obj | sensing...")
     print("move_parallel_to_obj | right_obs =", right_sense, "| front_obs =", front_sense, "| left_obs =", left_sense)
+    edge_of_obj = -1
     while left_sense != -1:
-        if front_sense != -1 and front_sense < 500:
+        if front_sense != -1 and front_sense < 70:
             fix_to_parallel(r)
         else:
             r.drive(400, 400)
-        time.sleep(0.4)
+        time.sleep(0.5)
 
         r_result = r.sense()  # call sense only once
         right_sense, front_sense, left_sense = r_result[4:]
+        if left_sense != -1:
+            edge_of_obj = calculate_obj_point(r)[0]
         print("move_parallel_to_obj | sensing...")
         print("move_parallel_to_obj | right_obs =", right_sense, "| front_obs =", front_sense, "| left_obs =",
               left_sense)
 
     print("move_parallel_to_obj | DONE")
+    return edge_of_obj
 
 
-def turn_around_obj(r):
+def turn_around_obj(r, edge_of_obj):
     print("turn_around_obj | START")
     r_result = r.sense()  # call sense only once
     right_sense, front_sense, left_sense = r_result[4:]
@@ -467,6 +593,7 @@ def turn_around_obj(r):
     print("turn_around_obj | right_obs =", right_sense, "| front_obs =", front_sense, "| left_obs =", left_sense)
     start_turn_orientation = [r_result[2], r_result[3]]
     current_orientation = [r_result[2], r_result[3]]
+
     # find angle between orientations
     print("turn_around_obj | start_turn_orientation = ", start_turn_orientation, " current_orientation = ",
           current_orientation)
@@ -476,73 +603,81 @@ def turn_around_obj(r):
     theta = 0
     # print("turn_around_obj | dot_product = ", dot_product, " theta = ", theta)
     #
-    while theta < 140:
+
+    while theta < 150:
         # print("turn_around_obj | right_obs =", right_sense, "| front_obs =", front_sense, "| left_obs =", left_sense)
         if front_sense != -1:
             print("turn_around_obj | new obj!!!")  # need to consider what to do
-        if left_sense != -1:
+            return "obj"
+        # fix_to_orthogonal(r, edge_of_obj)
+        r.drive(0, 400)  # slow turn
+        # if left_sense != -1:
+        if -1 < left_sense < 40:
             r.drive(400, 0)  # fix orientation
         else:
             r.drive(0, 400)  # slow turn
-        time.sleep(0.5)
+        time.sleep(0.3)
         # calculate details again
         r_result = r.sense()  # call sense only once
         right_sense, front_sense, left_sense = r_result[4:]
         current_orientation = [r_result[2], r_result[3]]
+        if start_turn_orientation == current_orientation:
+            r_result = r.sense()  # call sense only once
+            right_sense, front_sense, left_sense = r_result[4:]
+            current_orientation = [r_result[2], r_result[3]]
         print("turn_around_obj | start_turn_orientation = ", start_turn_orientation, " current_orientation = ",
               current_orientation)
+
         # find angle between orientations
-        dot_product = np.matmul(start_turn_orientation, current_orientation)
-        theta = np.arccos(dot_product)
-        theta = theta * 180 / math.pi  # convert to degrees
+        if start_turn_orientation == current_orientation:
+            dot_product = 1
+            theta = 0
+        else:
+            dot_product = np.matmul(start_turn_orientation, current_orientation)
+            if dot_product > 1:
+                theta = 0
+            else:
+                theta = np.arccos(dot_product)
+            theta = theta * 180 / math.pi  # convert to degrees
         print("turn_around_obj | dot_product = ", dot_product, " theta = ", theta)
         print("turn_around_obj | right_obs =", right_sense, "| front_obs =", front_sense, "| left_obs =", left_sense)
 
     print("turn_around_obj | DONE")
-
-    # print("right_obs =", right_sense, "| front_obs =", front_sense, "| left_obs =", left_sense)
-    # while left_sense == -1:
-    #     r_result = r.sense()  # call sense only once
-    #     right_sense, front_sense, left_sense = r_result[4:]
-    #     print("right_obs =", right_sense, "| front_obs =", front_sense, "| left_obs =", left_sense)
-    #     r.drive(-400, 400)
-    #     time.sleep(0.3)
-    # while left_sense != -1:
-    #     r_result = r.sense()  # call sense only once
-    #     right_sense, front_sense, left_sense = r_result[4:]
-    #     print("right_obs =", right_sense, "| front_obs =", front_sense, "| left_obs =", left_sense)
-    #     r.drive(400, 400)
-    #     time.sleep(0.3)
-    # while left_sense == -1:
-    #     r_result = r.sense()  # call sense only once
-    #     right_sense, front_sense, left_sense = r_result[4:]
-    #     print("right_obs =", right_sense, "| front_obs =", front_sense, "| left_obs =", left_sense)
-    #     r.drive(-400, 400)
-    #     time.sleep(0.3)
+    return "ok"
 
 
-def follow_obj(goal, r):
+def follow_obj(goal, r, obj_start_pos=None):
     print("follow_obj | START")
     r_result = r.sense()  # call sense only once
     current_position = r_result[0:2]
     right_sense, front_sense, left_sense = r_result[4:]
-    obj_start_pos = current_position
+    if obj_start_pos is None:
+        obj_start_pos = current_position
+    else:
+        cur_dist = math.sqrt((goal[0] - current_position[0]) ** 2 + (goal[1] - current_position[1]) ** 2)
+        start_dist = math.sqrt((goal[0] - obj_start_pos[0]) ** 2 + (goal[1] - obj_start_pos[1]) ** 2)
+        if cur_dist < start_dist:
+            print("follow_obj | END")
+            return
     start_dist = math.sqrt((goal[0] - obj_start_pos[0]) ** 2 + (goal[1] - obj_start_pos[1]) ** 2)
     print("follow_obj | goal : ", goal[0], goal[1])
     print("follow_obj | first sensing...")
     print("follow_obj | obj_start_pos : ", obj_start_pos[0], obj_start_pos[1])
     print("follow_obj | right_obs =", right_sense, "| front_obs =", front_sense, "| left_obs =", left_sense)
-    print("follow_obj | start distance to goal =  =", start_dist)
+    print("follow_obj | start distance to goal =  ", start_dist)
     fix_to_parallel(r)
     # print("follow_obj | right_obs =", right_sense, "| front_obs =", front_sense, "| left_obs =", left_sense)
     # print("follow_obj | done first while (fix_to_parallel)")
     first_left_sense = left_sense
     time.sleep(1)
-    move_parallel_to_obj(r)
+    edge_of_obj = move_parallel_to_obj(r)
 
     # pass the obj
     time.sleep(1)
-    turn_around_obj(r)
+    res = turn_around_obj(r, edge_of_obj)
+    print("res of turn around obj: " + str(res))
+    if res == "obj":
+        return obj_start_pos
 
     # start calculating distance
     r_result = r.sense()
@@ -555,7 +690,7 @@ def follow_obj(goal, r):
         if front_sense != -1 and front_sense < 500:
             fix_to_parallel(r)
         r.drive(400, 400)
-        time.sleep(0.3)
+        time.sleep(0.4)
         if left_sense == -1:
             counter += 1
             r.drive(0, 400)
@@ -568,15 +703,25 @@ def follow_obj(goal, r):
 
     print("follow_obj | reached the point")
     print("follow_obj | DONE")
-    return
+    return None
 
 
-def algorithm(goal):
-    r = RClient("192.168.1.153", 2777)
+def algorithm(goal, r):
+    sensing = r.sense()
+    while len(sensing) < 6:
+        sensing = r.sense()
     current_position = [r.sense()[0], r.sense()[1]]
+    last_obj_start_pos = None
     while not goal_reached(goal, current_position, tol=8):
-        move_straight(goal, r)
-        follow_obj(goal, r)
+        if last_obj_start_pos is None:
+            move_straight(goal, r)
+        sensing = r.sense()
+        right_obs = sensing[4]
+        front_obs = sensing[5]
+        left_obs = sensing[6]
+        # if (-1 < front_obs < 40 or -1 < right_obs < 40 or -1 < left_obs < 40) or last_obj_start_pos is not None:
+        if (-1 < front_obs < 40) or last_obj_start_pos is not None:
+            last_obj_start_pos = follow_obj(goal, r, last_obj_start_pos)
         current_position = [r.sense()[0], r.sense()[1]]
 
 
