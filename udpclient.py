@@ -7,6 +7,7 @@ import time
 import errno
 import threading
 import matplotlib.pyplot as plt
+from matplotlib import colors
 from errnames import get_error_name
 import math
 import numpy as np
@@ -15,7 +16,7 @@ first = 1
 right_obs_arr = []
 front_obs_arr = []
 left_obs_arr = []
-map = np.zeros([700, 370], dtype=int)
+map = np.zeros([700, 380], dtype=int)
 
 def get_ip():
     from netifaces import interfaces, ifaddresses, AF_INET
@@ -461,6 +462,13 @@ def save_points_to_map(r):
     if right_obj_pos != -1:
         right_obj_pos = [math.floor(right_obj_pos[0]), math.floor(right_obj_pos[1])]
         map[right_obj_pos[0] + X_LOWER_FIX, right_obj_pos[1] + Y_LOWER_FIX] = 2
+
+
+def draw_map():
+    cmap = colors.ListedColormap(['white', 'Blue', 'red'])
+    plt.figure()
+    plt.pcolor(map, cmap=cmap, edgecolors='k', linewidth=0.05)
+    plt.show()
 
 
 def goal_reached(goal, current_position, tol):
