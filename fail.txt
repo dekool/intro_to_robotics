@@ -1,0 +1,469 @@
+C:\Users\joann\Miniconda3\python.exe "C:/Users/joann/OneDrive - Technion/Technion - round 2/סמסטר א/236927 - מבוא לרובוטיקה/פרויקט סיום/CODE_GIT/udpclient.py"
+k
+cmd =  k
+auto drive is ON
+Invalid command for manual drive
+move_straight: started. goal =  [0, 0] current =  [90.4331, -246.801]
+move_straight: itr 0  |  current_orientation =  [0.571681, 0.820476]  |  desired_orientation =  [-0.34405141226296665, 0.9389508111290272]
+move_straight: itr 0  |  theta =  54.99143028481302  |  cross_product =  0.8190662651849232
+driving... 555.507946026739 -555.507946026739
+move_straight | distance to object: -1.0
+driving... 500 350
+move_straight: itr 0  |  rot_speed =  555.507946026739  |  higher_speed =  500  |  lower_speed =  350
+move_straight: itr 0  |  current_position =  [90.5673, -247.102]
+move_straight: itr 1  |  current_orientation =  [0.205152, 0.97873]  |  desired_orientation =  [-0.3441314991420179, 0.9389214617305685]
+move_straight: itr 1  |  theta =  31.967198059579566  |  cross_product =  0.5294334378722168
+driving... 0 0
+move_straight | distance to object: -1.0
+driving... 500 350
+move_straight: itr 1  |  rot_speed =  0  |  higher_speed =  500  |  lower_speed =  350
+move_straight: itr 1  |  current_position =  [92.8615, -231.689]
+move_straight: itr 2  |  current_orientation =  [0.11258, 0.993643]  |  desired_orientation =  [-0.3720326344436706, 0.9282196501415504]
+move_straight: itr 2  |  theta =  28.30505489723445  |  cross_product =  0.47416659119944793
+driving... 0 0
+move_straight | distance to object: -1.0
+driving... 500 350
+move_straight: itr 2  |  rot_speed =  0  |  higher_speed =  500  |  lower_speed =  350
+move_straight: itr 2  |  current_position =  [93.5301, -222.559]
+move_straight: itr 3  |  current_orientation =  [0.0794618, 0.996838]  |  desired_orientation =  [-0.38742726539008576, 0.9219002733660296]
+move_straight: itr 3  |  theta =  27.352131285779734  |  cross_product =  0.4594580755190791
+driving... 0 0
+move_straight | distance to object: 90.0
+driving... 500 350
+move_straight: itr 3  |  rot_speed =  0  |  higher_speed =  500  |  lower_speed =  350
+move_straight: itr 3  |  current_position =  [94.0727, -207.035]
+move_straight: itr 4  |  current_orientation =  [0.0293923, 0.999568]  |  desired_orientation =  [-0.41367859844434446, 0.9104229880605623]
+move_straight: itr 4  |  theta =  26.12042080782631  |  cross_product =  0.440259314881789
+driving... 0 0
+move_straight | distance to object: 72.0
+driving... 500 354.8865510676316
+move_straight: itr 4  |  rot_speed =  0  |  higher_speed =  500  |  lower_speed =  354.8865510676316
+move_straight: itr 4  |  current_position =  [93.696, -188.728]
+move_straight: itr 5  |  current_orientation =  [-0.0724717, 0.99737]  |  desired_orientation =  [-0.4446755673852937, 0.8956917102276694]
+move_straight: itr 5  |  theta =  22.246681193325387  |  cross_product =  0.3785937697269638
+driving... 0 0
+move_straight | distance to object: 66.0
+driving... 500 376.4073267037479
+move_straight: itr 5  |  rot_speed =  0  |  higher_speed =  500  |  lower_speed =  376.4073267037479
+move_straight: itr 5  |  current_position =  [93.0607, -180.043]
+move_straight: itr 6  |  current_orientation =  [-0.0618907, 0.998083]  |  desired_orientation =  [-0.4591699179389398, 0.8883484600425372]
+move_straight: itr 6  |  theta =  23.785204675610913  |  cross_product =  0.4033091811702962
+driving... 0 0
+move_straight | distance to object: 49.0
+move_straight | obstacle detected !
+follow_obj | START
+follow_obj | goal :  0 0
+follow_obj | first sensing...
+follow_obj | obj_start_pos :  92.2537 -171.638
+follow_obj | right_obs = 82.0 | front_obs = 49.0 | left_obs = -1.0
+follow_obj | start distance to goal =   194.85981681118867
+fix_to_parallel | START
+fix_to_parallel | sensing...
+fix_to_parallel | right_obs = 82.0 | front_obs = 49.0 | left_obs = -1.0
+fix_to_parallel | theta =  -4.9684948604738555
+fix_to_parallel | rotate robot...
+driving... 350 -350
+fix_to_parallel | sensing...
+fix_to_parallel | right_obs = -1.0 | front_obs = 45.0 | left_obs = -1.0
+fix_to_parallel | theta =  -4.95968796937084
+fix_to_parallel | rotate robot...
+driving... 350 -350
+fix_to_parallel | sensing...
+fix_to_parallel | right_obs = -1.0 | front_obs = 54.0 | left_obs = -1.0
+fix_to_parallel | theta =  -4.977701941774701
+fix_to_parallel | rotate robot...
+driving... 350 -350
+fix_to_parallel | sensing...
+fix_to_parallel | right_obs = -1.0 | front_obs = 54.0 | left_obs = -1.0
+fix_to_parallel | theta =  -4.977701941774701
+fix_to_parallel | rotate robot...
+driving... 350 -350
+fix_to_parallel | sensing...
+fix_to_parallel | right_obs = -1.0 | front_obs = 66.0 | left_obs = 45.0
+fix_to_parallel | theta =  -4.994191920814847
+fix_to_parallel | rotate robot...
+driving... 350 -350
+fix_to_parallel | sensing...
+fix_to_parallel | right_obs = -1.0 | front_obs = -1.0 | left_obs = 48.0
+fix_to_parallel | DONE
+move_parallel_to_obj | START
+move_parallel_to_obj | sensing...
+move_parallel_to_obj | right_obs = -1.0 | front_obs = -1.0 | left_obs = 50.0
+driving... 400 400
+move_parallel_to_obj | sensing...
+move_parallel_to_obj | right_obs = -1.0 | front_obs = -1.0 | left_obs = 49.0
+driving... 400 400
+move_parallel_to_obj | sensing...
+move_parallel_to_obj | right_obs = -1.0 | front_obs = -1.0 | left_obs = 43.0
+driving... 400 400
+move_parallel_to_obj | sensing...
+move_parallel_to_obj | right_obs = -1.0 | front_obs = -1.0 | left_obs = 35.0
+driving... 400 400
+move_parallel_to_obj | sensing...
+move_parallel_to_obj | right_obs = 90.0 | front_obs = -1.0 | left_obs = 28.0
+driving... 400 400
+move_parallel_to_obj | sensing...
+move_parallel_to_obj | right_obs = 61.0 | front_obs = -1.0 | left_obs = 20.0
+driving... 400 400
+move_parallel_to_obj | sensing...
+move_parallel_to_obj | right_obs = 33.0 | front_obs = -1.0 | left_obs = -1.0
+move_parallel_to_obj | DONE
+turn_around_obj | START
+turn_around_obj | sensing...
+turn_around_obj | right_obs = -1.0 | front_obs = -1.0 | left_obs = -1.0
+turn_around_obj | start_turn_orientation =  [-0.844145, 0.536115]  current_orientation =  [-0.844145, 0.536115]
+driving... 0 400
+turn_around_obj | start_turn_orientation =  [-0.844145, 0.536115]  current_orientation =  [-0.776545, 0.630061]
+turn_around_obj | dot_product =  0.99330173204  theta =  6.635315923406786
+turn_around_obj | right_obs = -1.0 | front_obs = -1.0 | left_obs = -1.0
+driving... 0 400
+turn_around_obj | start_turn_orientation =  [-0.844145, 0.536115]  current_orientation =  [-0.551727, 0.834024]
+turn_around_obj | dot_product =  0.9128703651750001  theta =  24.09492170684655
+turn_around_obj | right_obs = -1.0 | front_obs = -1.0 | left_obs = -1.0
+driving... 0 400
+turn_around_obj | start_turn_orientation =  [-0.844145, 0.536115]  current_orientation =  [-0.293621, 0.955922]
+turn_around_obj | dot_product =  0.760342822075  theta =  40.50557034793205
+turn_around_obj | right_obs = -1.0 | front_obs = -1.0 | left_obs = 98.0
+driving... 400 0
+turn_around_obj | start_turn_orientation =  [-0.844145, 0.536115]  current_orientation =  [-0.220932, 0.975289]
+turn_around_obj | dot_product =  0.709365705375  theta =  44.81666921595518
+turn_around_obj | right_obs = -1.0 | front_obs = -1.0 | left_obs = 94.0
+driving... 400 0
+turn_around_obj | start_turn_orientation =  [-0.844145, 0.536115]  current_orientation =  [-0.506614, 0.862173]
+turn_around_obj | dot_product =  0.889879552925  theta =  27.141884538731787
+turn_around_obj | right_obs = -1.0 | front_obs = -1.0 | left_obs = -1.0
+driving... 0 400
+turn_around_obj | start_turn_orientation =  [-0.844145, 0.536115]  current_orientation =  [-0.53544, 0.844573]
+turn_around_obj | dot_product =  0.904777252695  theta =  25.206700565873216
+turn_around_obj | right_obs = -1.0 | front_obs = -1.0 | left_obs = -1.0
+driving... 0 400
+turn_around_obj | start_turn_orientation =  [-0.844145, 0.536115]  current_orientation =  [-0.28511, 0.958495]
+turn_around_obj | dot_product =  0.7545377278750001  theta =  41.01500616684897
+turn_around_obj | right_obs = -1.0 | front_obs = -1.0 | left_obs = -1.0
+driving... 0 400
+turn_around_obj | start_turn_orientation =  [-0.844145, 0.536115]  current_orientation =  [-0.0412201, 0.99915]
+turn_around_obj | dot_product =  0.5704550435645  theta =  55.218036577073896
+turn_around_obj | right_obs = -1.0 | front_obs = -1.0 | left_obs = -1.0
+driving... 0 400
+turn_around_obj | start_turn_orientation =  [-0.844145, 0.536115]  current_orientation =  [0.37295, 0.927851]
+turn_around_obj | dot_product =  0.18261096111499997  theta =  79.4781220126956
+turn_around_obj | right_obs = -1.0 | front_obs = -1.0 | left_obs = -1.0
+driving... 0 400
+turn_around_obj | start_turn_orientation =  [-0.844145, 0.536115]  current_orientation =  [0.54907, 0.835777]
+turn_around_obj | dot_product =  -0.015422108794999945  theta =  90.88365677587251
+turn_around_obj | right_obs = -1.0 | front_obs = -1.0 | left_obs = -1.0
+driving... 0 400
+turn_around_obj | start_turn_orientation =  [-0.844145, 0.536115]  current_orientation =  [0.849899, 0.526945]
+turn_around_obj | dot_product =  -0.43493487268  theta =  115.78114979881265
+turn_around_obj | right_obs = -1.0 | front_obs = -1.0 | left_obs = 77.0
+driving... 400 0
+turn_around_obj | start_turn_orientation =  [-0.844145, 0.536115]  current_orientation =  [0.93135, 0.364126]
+turn_around_obj | dot_product =  -0.59098103526  theta =  126.22665638475648
+turn_around_obj | right_obs = -1.0 | front_obs = -1.0 | left_obs = 43.0
+driving... 400 0
+turn_around_obj | start_turn_orientation =  [-0.844145, 0.536115]  current_orientation =  [0.75194, 0.659231]
+turn_around_obj | dot_product =  -0.2813227637350001  theta =  106.33916724839864
+turn_around_obj | right_obs = -1.0 | front_obs = -1.0 | left_obs = -1.0
+driving... 0 400
+turn_around_obj | start_turn_orientation =  [-0.844145, 0.536115]  current_orientation =  [0.630939, 0.775832]
+turn_around_obj | dot_product =  -0.11666882947500007  theta =  96.69988994961652
+turn_around_obj | right_obs = -1.0 | front_obs = 71.0 | left_obs = -1.0
+turn_around_obj | new obj!!!
+res of turn around obj: obj
+follow_obj | START
+follow_obj | goal :  0 0
+follow_obj | first sensing...
+follow_obj | obj_start_pos :  92.2537 -171.638
+follow_obj | right_obs = -1.0 | front_obs = 71.0 | left_obs = -1.0
+follow_obj | start distance to goal =   194.85981681118867
+fix_to_parallel | START
+fix_to_parallel | sensing...
+fix_to_parallel | right_obs = -1.0 | front_obs = 71.0 | left_obs = -1.0
+fix_to_parallel | theta =  -4.9994403819888475
+fix_to_parallel | rotate robot...
+driving... 350 -350
+fix_to_parallel | sensing...
+fix_to_parallel | right_obs = -1.0 | front_obs = -1.0 | left_obs = -1.0
+fix_to_parallel | DONE
+move_parallel_to_obj | START
+move_parallel_to_obj | sensing...
+move_parallel_to_obj | right_obs = -1.0 | front_obs = -1.0 | left_obs = -1.0
+move_parallel_to_obj | DONE
+turn_around_obj | START
+turn_around_obj | sensing...
+turn_around_obj | right_obs = -1.0 | front_obs = 75.0 | left_obs = -1.0
+turn_around_obj | start_turn_orientation =  [0.53665, 0.843805]  current_orientation =  [0.53665, 0.843805]
+turn_around_obj | new obj!!!
+res of turn around obj: obj
+follow_obj | START
+follow_obj | goal :  0 0
+follow_obj | first sensing...
+follow_obj | obj_start_pos :  92.2537 -171.638
+follow_obj | right_obs = -1.0 | front_obs = 75.0 | left_obs = -1.0
+follow_obj | start distance to goal =   194.85981681118867
+fix_to_parallel | START
+fix_to_parallel | sensing...
+fix_to_parallel | right_obs = -1.0 | front_obs = 75.0 | left_obs = -1.0
+fix_to_parallel | theta =  -5.00314190340913
+fix_to_parallel | rotate robot...
+driving... 350 -350
+fix_to_parallel | sensing...
+fix_to_parallel | right_obs = -1.0 | front_obs = -1.0 | left_obs = -1.0
+fix_to_parallel | DONE
+move_parallel_to_obj | START
+move_parallel_to_obj | sensing...
+move_parallel_to_obj | right_obs = -1.0 | front_obs = -1.0 | left_obs = -1.0
+move_parallel_to_obj | DONE
+turn_around_obj | START
+turn_around_obj | sensing...
+turn_around_obj | right_obs = -1.0 | front_obs = -1.0 | left_obs = -1.0
+turn_around_obj | start_turn_orientation =  [0.512104, 0.858924]  current_orientation =  [0.512104, 0.858924]
+driving... 0 400
+turn_around_obj | start_turn_orientation =  [0.512104, 0.858924]  current_orientation =  [0.730191, 0.683243]
+turn_around_obj | dot_product =  0.9607875423960001  theta =  16.098266821322035
+turn_around_obj | right_obs = -1.0 | front_obs = -1.0 | left_obs = -1.0
+driving... 0 400
+turn_around_obj | start_turn_orientation =  [0.512104, 0.858924]  current_orientation =  [0.906308, 0.422619]
+turn_around_obj | dot_product =  0.827121553988  theta =  34.19582252264062
+turn_around_obj | right_obs = -1.0 | front_obs = -1.0 | left_obs = -1.0
+driving... 0 400
+turn_around_obj | start_turn_orientation =  [0.512104, 0.858924]  current_orientation =  [0.988546, 0.150918]
+turn_around_obj | dot_product =  0.635865453016  theta =  50.51579690612251
+turn_around_obj | right_obs = 59.0 | front_obs = -1.0 | left_obs = 51.0
+driving... 400 0
+turn_around_obj | start_turn_orientation =  [0.512104, 0.858924]  current_orientation =  [0.930713, 0.36575]
+turn_around_obj | dot_product =  0.7907733031520001  theta =  37.74216329620184
+turn_around_obj | right_obs = -1.0 | front_obs = -1.0 | left_obs = -1.0
+driving... 0 400
+turn_around_obj | start_turn_orientation =  [0.512104, 0.858924]  current_orientation =  [0.983372, 0.181602]
+turn_around_obj | dot_product =  0.659571050936  theta =  48.73283310016241
+turn_around_obj | right_obs = 55.0 | front_obs = -1.0 | left_obs = 58.0
+driving... 400 0
+turn_around_obj | start_turn_orientation =  [0.512104, 0.858924]  current_orientation =  [0.898323, 0.439336]
+turn_around_obj | dot_product =  0.837391036056  theta =  33.13436369608982
+turn_around_obj | right_obs = -1.0 | front_obs = -1.0 | left_obs = -1.0
+driving... 0 400
+turn_around_obj | start_turn_orientation =  [0.512104, 0.858924]  current_orientation =  [0.988188, 0.153248]
+turn_around_obj | dot_product =  0.637683412704  theta =  50.38070648171207
+turn_around_obj | right_obs = 66.0 | front_obs = -1.0 | left_obs = 59.0
+driving... 400 0
+turn_around_obj | start_turn_orientation =  [0.512104, 0.858924]  current_orientation =  [0.917947, 0.396704]
+turn_around_obj | dot_product =  0.810822916984  theta =  35.82358927945251
+turn_around_obj | right_obs = 48.0 | front_obs = -1.0 | left_obs = -1.0
+driving... 0 400
+turn_around_obj | start_turn_orientation =  [0.512104, 0.858924]  current_orientation =  [0.98798, 0.15458]
+turn_around_obj | dot_product =  0.6387209818399999  theta =  50.303487679088434
+turn_around_obj | right_obs = 73.0 | front_obs = -1.0 | left_obs = 62.0
+driving... 400 0
+turn_around_obj | start_turn_orientation =  [0.512104, 0.858924]  current_orientation =  [0.924302, 0.381661]
+turn_around_obj | dot_product =  0.8011565441719999  theta =  36.75931345481918
+turn_around_obj | right_obs = 49.0 | front_obs = -1.0 | left_obs = -1.0
+driving... 0 400
+turn_around_obj | start_turn_orientation =  [0.512104, 0.858924]  current_orientation =  [0.986305, 0.164931]
+turn_around_obj | dot_product =  0.6467539299639999  theta =  49.70269315860073
+turn_around_obj | right_obs = 78.0 | front_obs = -1.0 | left_obs = 67.0
+driving... 400 0
+turn_around_obj | start_turn_orientation =  [0.512104, 0.858924]  current_orientation =  [0.93497, 0.354727]
+turn_around_obj | dot_product =  0.783485410628  theta =  38.4191865458211
+turn_around_obj | right_obs = 53.0 | front_obs = -1.0 | left_obs = -1.0
+driving... 0 400
+turn_around_obj | start_turn_orientation =  [0.512104, 0.858924]  current_orientation =  [0.994848, 0.101375]
+turn_around_obj | dot_product =  0.596539060692  theta =  53.37757381483651
+turn_around_obj | right_obs = -1.0 | front_obs = -1.0 | left_obs = -1.0
+driving... 0 400
+turn_around_obj | start_turn_orientation =  [0.512104, 0.858924]  current_orientation =  [0.972979, -0.230893]
+turn_around_obj | dot_product =  0.29994689868400004  theta =  72.54558623536933
+turn_around_obj | right_obs = -1.0 | front_obs = -1.0 | left_obs = 47.0
+driving... 400 0
+turn_around_obj | start_turn_orientation =  [0.512104, 0.858924]  current_orientation =  [0.995404, 0.095765]
+turn_around_obj | dot_product =  0.592005226876  theta =  53.700565323240845
+turn_around_obj | right_obs = -1.0 | front_obs = -1.0 | left_obs = -1.0
+driving... 0 400
+turn_around_obj | start_turn_orientation =  [0.512104, 0.858924]  current_orientation =  [0.97979, -0.200029]
+turn_around_obj | dot_product =  0.329944669364  theta =  70.73458281728698
+turn_around_obj | right_obs = -1.0 | front_obs = -1.0 | left_obs = 47.0
+driving... 400 0
+turn_around_obj | start_turn_orientation =  [0.512104, 0.858924]  current_orientation =  [0.999238, 0.0390437]
+turn_around_obj | dot_product =  0.5452493477308  theta =  56.95829517112186
+turn_around_obj | right_obs = -1.0 | front_obs = -1.0 | left_obs = -1.0
+driving... 0 400
+turn_around_obj | start_turn_orientation =  [0.512104, 0.858924]  current_orientation =  [0.986006, -0.166711]
+turn_around_obj | dot_product =  0.36174553766000006  theta =  68.79256577372085
+turn_around_obj | right_obs = -1.0 | front_obs = -1.0 | left_obs = 50.0
+driving... 400 0
+turn_around_obj | start_turn_orientation =  [0.512104, 0.858924]  current_orientation =  [0.998546, -0.0539009]
+turn_around_obj | dot_product =  0.4650626241524  theta =  62.28572494837232
+turn_around_obj | right_obs = -1.0 | front_obs = -1.0 | left_obs = -1.0
+driving... 0 400
+turn_around_obj | start_turn_orientation =  [0.512104, 0.858924]  current_orientation =  [0.974229, -0.225562]
+turn_around_obj | dot_product =  0.305165952528  theta =  72.23185171651933
+turn_around_obj | right_obs = -1.0 | front_obs = -1.0 | left_obs = -1.0
+driving... 0 400
+turn_around_obj | start_turn_orientation =  [0.512104, 0.858924]  current_orientation =  [0.942052, -0.335466]
+turn_around_obj | dot_product =  0.19428879882399996  theta =  78.79681979849657
+turn_around_obj | right_obs = 72.0 | front_obs = -1.0 | left_obs = 44.0
+driving... 400 0
+turn_around_obj | start_turn_orientation =  [0.512104, 0.858924]  current_orientation =  [0.978677, -0.205408]
+turn_around_obj | dot_product =  0.324754545416  theta =  71.04929513521894
+turn_around_obj | right_obs = -1.0 | front_obs = -1.0 | left_obs = -1.0
+driving... 0 400
+turn_around_obj | start_turn_orientation =  [0.512104, 0.858924]  current_orientation =  [0.888546, -0.458788]
+turn_around_obj | dot_product =  0.06096393667200001  theta =  86.50485643264321
+turn_around_obj | right_obs = 78.0 | front_obs = -1.0 | left_obs = 39.0
+driving... 400 0
+turn_around_obj | start_turn_orientation =  [0.512104, 0.858924]  current_orientation =  [0.968037, -0.250809]
+turn_around_obj | dot_product =  0.280309750332  theta =  73.72130756022966
+turn_around_obj | right_obs = 63.0 | front_obs = -1.0 | left_obs = -1.0
+driving... 0 400
+turn_around_obj | start_turn_orientation =  [0.512104, 0.858924]  current_orientation =  [0.896957, -0.442118]
+turn_around_obj | dot_product =  0.079589506496  theta =  85.43502904601132
+turn_around_obj | right_obs = 77.0 | front_obs = -1.0 | left_obs = -1.0
+driving... 0 400
+turn_around_obj | start_turn_orientation =  [0.512104, 0.858924]  current_orientation =  [0.725425, -0.688302]
+turn_around_obj | dot_product =  -0.21970606284799993  theta =  102.69176924398171
+turn_around_obj | right_obs = -1.0 | front_obs = -1.0 | left_obs = 33.0
+driving... 400 0
+turn_around_obj | start_turn_orientation =  [0.512104, 0.858924]  current_orientation =  [0.853866, -0.520493]
+turn_around_obj | dot_product =  -0.009795735467999944  theta =  90.56126327592409
+turn_around_obj | right_obs = -1.0 | front_obs = -1.0 | left_obs = -1.0
+driving... 0 400
+turn_around_obj | start_turn_orientation =  [0.512104, 0.858924]  current_orientation =  [0.648439, -0.761267]
+turn_around_obj | dot_product =  -0.32180229105200003  theta =  108.77195487931779
+turn_around_obj | right_obs = -1.0 | front_obs = -1.0 | left_obs = 28.0
+driving... 400 0
+turn_around_obj | start_turn_orientation =  [0.512104, 0.858924]  current_orientation =  [0.878327, -0.47806]
+turn_around_obj | dot_product =  0.03917756256799998  theta =  87.75471638924917
+turn_around_obj | right_obs = -1.0 | front_obs = -1.0 | left_obs = -1.0
+driving... 0 400
+turn_around_obj | start_turn_orientation =  [0.512104, 0.858924]  current_orientation =  [0.642971, -0.765891]
+turn_around_obj | dot_product =  -0.3285741403  theta =  109.18225444699641
+turn_around_obj | right_obs = -1.0 | front_obs = -1.0 | left_obs = -1.0
+driving... 0 400
+turn_around_obj | start_turn_orientation =  [0.512104, 0.858924]  current_orientation =  [0.417134, -0.908845]
+turn_around_obj | dot_product =  -0.5670127928440001  theta =  124.54218030199098
+turn_around_obj | right_obs = -1.0 | front_obs = -1.0 | left_obs = 24.0
+driving... 400 0
+turn_around_obj | start_turn_orientation =  [0.512104, 0.858924]  current_orientation =  [0.621375, -0.783513]
+turn_around_obj | dot_product =  -0.35476949701200006  theta =  110.779318050083
+turn_around_obj | right_obs = -1.0 | front_obs = -1.0 | left_obs = -1.0
+driving... 0 400
+turn_around_obj | start_turn_orientation =  [0.512104, 0.858924]  current_orientation =  [0.441526, -0.897248]
+turn_around_obj | dot_product =  -0.5445606104480001  theta =  122.99464240137513
+turn_around_obj | right_obs = -1.0 | front_obs = -1.0 | left_obs = -1.0
+driving... 0 400
+turn_around_obj | start_turn_orientation =  [0.512104, 0.858924]  current_orientation =  [0.16831, -0.985734]
+turn_around_obj | dot_product =  -0.760478365976  theta =  139.50638774226735
+turn_around_obj | right_obs = -1.0 | front_obs = -1.0 | left_obs = 19.0
+driving... 400 0
+turn_around_obj | start_turn_orientation =  [0.512104, 0.858924]  current_orientation =  [0.27012, -0.962827]
+turn_around_obj | dot_product =  -0.688665685668  theta =  133.52457891915222
+turn_around_obj | right_obs = -1.0 | front_obs = -1.0 | left_obs = -1.0
+driving... 0 400
+turn_around_obj | start_turn_orientation =  [0.512104, 0.858924]  current_orientation =  [-0.00366746, -0.999993]
+turn_around_obj | dot_product =  -0.86079610846784  theta =  149.4060877522314
+turn_around_obj | right_obs = -1.0 | front_obs = -1.0 | left_obs = 18.0
+driving... 400 0
+turn_around_obj | start_turn_orientation =  [0.512104, 0.858924]  current_orientation =  [0.267676, -0.963509]
+turn_around_obj | dot_product =  -0.690503054012  theta =  133.66994315287607
+turn_around_obj | right_obs = -1.0 | front_obs = -1.0 | left_obs = -1.0
+driving... 0 400
+turn_around_obj | start_turn_orientation =  [0.512104, 0.858924]  current_orientation =  [0.0116449, -0.999932]
+turn_around_obj | dot_product =  -0.8529021932984  theta =  148.52874515335438
+turn_around_obj | right_obs = -1.0 | front_obs = -1.0 | left_obs = -1.0
+driving... 0 400
+turn_around_obj | start_turn_orientation =  [0.512104, 0.858924]  current_orientation =  [-0.275088, -0.961419]
+turn_around_obj | dot_product =  -0.966659518308  theta =  165.16328885510046
+turn_around_obj | right_obs = -1.0 | front_obs = -1.0 | left_obs = 18.0
+turn_around_obj | DONE
+res of turn around obj: ok
+follow_obj | start dist: 194.85981681118867
+follow_obj | curr dist: 160.7600487247998
+follow_obj | reached the point
+follow_obj | DONE
+move_straight: started. goal =  [0, 0] current =  [114.429, -112.915]
+move_straight: itr 0  |  current_orientation =  [-0.275088, -0.961419]  |  desired_orientation =  [-0.7117999833148068, 0.7023822205559028]
+move_straight: itr 0  |  theta =  118.65118292447289  |  cross_product =  -0.8775549484468204
+driving... -909.1732384692939 909.1732384692939
+move_straight | distance to object: -1.0
+driving... 350 500
+move_straight: itr 0  |  rot_speed =  909.1732384692939  |  higher_speed =  500  |  lower_speed =  350
+move_straight: itr 0  |  current_position =  [115.639, -113.697]
+move_straight: itr 1  |  current_orientation =  [-0.981621, 0.190842]  |  desired_orientation =  [-0.7130689431157469, 0.7010939183617212]
+move_straight: itr 1  |  theta =  33.51289160856324  |  cross_product =  -0.5521250099940557
+driving... 0 0
+move_straight | distance to object: -1.0
+driving... 350 500
+move_straight: itr 1  |  rot_speed =  0  |  higher_speed =  500  |  lower_speed =  350
+move_straight: itr 1  |  current_position =  [104.899, -103.973]
+move_straight: itr 2  |  current_orientation =  [-0.684529, 0.728985]  |  desired_orientation =  [-0.7102346443466506, 0.7039650204163462]
+move_straight: itr 2  |  theta =  2.0561408288157965  |  cross_product =  0.035865930748462005
+driving... 0 0
+move_straight | distance to object: -1.0
+driving... 500 488.57699539546775
+move_straight: itr 2  |  rot_speed =  0  |  higher_speed =  500  |  lower_speed =  488.57699539546775
+move_straight: itr 2  |  current_position =  [98.4447, -96.6036]
+move_straight: itr 3  |  current_orientation =  [-0.67906, 0.734083]  |  desired_orientation =  [-0.7137495075308117, 0.7004010568949219]
+move_straight: itr 3  |  theta =  2.770389407414406  |  cross_product =  0.04833703804167522
+driving... 0 0
+move_straight | distance to object: -1.0
+driving... 500 484.60894773658663
+move_straight: itr 3  |  rot_speed =  0  |  higher_speed =  500  |  lower_speed =  484.60894773658663
+move_straight: itr 3  |  current_position =  [88.3521, -85.4304]
+move_straight: itr 4  |  current_orientation =  [-0.6686, 0.743622]  |  desired_orientation =  [-0.7188933467573748, 0.6951203895642689]
+move_straight: itr 4  |  theta =  4.004223132129343  |  cross_product =  0.06982741583974239
+driving... 0 0
+move_straight | distance to object: -1.0
+driving... 500 477.75431593261476
+move_straight: itr 4  |  rot_speed =  0  |  higher_speed =  500  |  lower_speed =  477.75431593261476
+move_straight: itr 4  |  current_position =  [77.1439, -72.8286]
+move_straight: itr 5  |  current_orientation =  [-0.652613, 0.757691]  |  desired_orientation =  [-0.7271520738520795, 0.6864764100044664]
+move_straight: itr 5  |  theta =  5.909425345484288  |  cross_product =  0.10295315262681115
+driving... 0 0
+move_straight | distance to object: -1.0
+driving... 500 467.169859191754
+move_straight: itr 5  |  rot_speed =  0  |  higher_speed =  500  |  lower_speed =  467.169859191754
+move_straight: itr 5  |  current_position =  [66.2532, -59.9904]
+move_straight: itr 6  |  current_orientation =  [-0.656682, 0.754168]  |  desired_orientation =  [-0.7412739452534785, 0.6712026058414426]
+move_straight: itr 6  |  theta =  6.792604095751099  |  cross_product =  0.11827841913475512
+driving... 0 0
+move_straight | distance to object: -1.0
+driving... 500 462.2633105791606
+move_straight: itr 6  |  rot_speed =  0  |  higher_speed =  500  |  lower_speed =  462.2633105791606
+move_straight: itr 6  |  current_position =  [54.3804, -46.672]
+move_straight: itr 7  |  current_orientation =  [-0.637677, 0.770304]  |  desired_orientation =  [-0.7588411674043053, 0.6512757347333549]
+move_straight: itr 7  |  theta =  9.743297588716617  |  cross_product =  0.16923482991864436
+driving... 0 0
+move_straight | distance to object: -1.0
+driving... 500 445.87056895157434
+move_straight: itr 7  |  rot_speed =  0  |  higher_speed =  500  |  lower_speed =  445.87056895157434
+move_straight: itr 7  |  current_position =  [44.4456, -35.3988]
+move_straight: itr 8  |  current_orientation =  [-0.672033, 0.740521]  |  desired_orientation =  [-0.7822206786557196, 0.6230014525531906]
+move_straight: itr 8  |  theta =  9.240227799798197  |  cross_product =  0.1605733040151338
+driving... 0 0
+move_straight | distance to object: -1.0
+driving... 500 448.66540111223225
+move_straight: itr 8  |  rot_speed =  0  |  higher_speed =  500  |  lower_speed =  448.66540111223225
+move_straight: itr 8  |  current_position =  [32.4761, -21.9136]
+move_straight: itr 9  |  current_orientation =  [-0.708871, 0.705338]  |  desired_orientation =  [-0.8289406008883422, 0.5593366429967506]
+move_straight: itr 9  |  theta =  10.846960018895954  |  cross_product =  0.18818578009163195
+driving... 0 0
+move_straight | distance to object: -1.0
+driving... 391.77837308483475 350
+move_straight: itr 9  |  rot_speed =  0  |  higher_speed =  391.77837308483475  |  lower_speed =  350
+move_straight: itr 9  |  current_position =  [17.3311, -6.44081]
+move_straight: itr 10  |  current_orientation =  [-0.702276, 0.711905]  |  desired_orientation =  [-0.9373626879220671, 0.34835497885277505]
+move_straight: itr 10  |  theta =  25.00336428434238  |  cross_product =  0.42267184321634776
+driving... 0 0
+move_straight | distance to object: -1.0
+driving... 350 350
+move_straight: itr 10  |  rot_speed =  0  |  higher_speed =  350  |  lower_speed =  350
+move_straight: itr 10  |  current_position =  [-9999.0, -9999.0]
+move_straight: itr 11  |  current_orientation =  [1.0, 0.0]  |  desired_orientation =  [0.7071067811865476, 0.7071067811865476]
+move_straight: itr 11  |  theta =  45.0  |  cross_product =  0.7071067811865476
+driving... 500.0 -500.0
+move_straight | distance to object: -1.0
+driving... 500 350
+move_straight: itr 11  |  rot_speed =  500.0  |  higher_speed =  500  |  lower_speed =  350
+move_straight: itr 11  |  current_position =  [5.46438, 4.65632]
+move_straight: done. goal =  [0, 0] current =  [5.46438, 4.65632]
+Done
