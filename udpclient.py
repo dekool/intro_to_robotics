@@ -361,7 +361,7 @@ def update_map(previous_sense, current_sense):
 def test():
     global done
     global cmd
-    r = RClient("192.168.1.152", 2777)
+    r = RClient("192.168.1.153", 2777)
     # r.drive(1000, 1000)
     counter = 0
     # initiate params
