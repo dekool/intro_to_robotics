@@ -20,6 +20,9 @@ class TangentBugs(object):
         self.front_sense = -1
         self.left_sense = -1
         self.object_start_dist = -1
+        self.follow_obj_left_arr = []
+        self.start_turning = False
+        self.get_far_from_obj = False
 
         self.goal_tolerance = 7
 
@@ -30,7 +33,7 @@ class TangentBugs(object):
         counter = 0
         r_result = self.old_sense
         # while r_result != self.old_sense or counter > 10:
-        while r_result == self.old_sense and counter < 10:
+        while (r_result == self.old_sense or r_result[0] == -9999) and counter < 10:
             r_result = self.RClient.sense()  # call sense only once
             while len(r_result) < 6:
                 r_result = self.RClient.sense()
@@ -51,31 +54,34 @@ class TangentBugs(object):
                 round(self.current_position[1]) in np.arange(self.goal[1] - self.goal_tolerance,
                                                              self.goal[1] + self.goal_tolerance))):
             self.state = "DONE"
+
+        cur_dist = math.sqrt(
+            (self.goal[0] - self.current_position[0]) ** 2 + (self.goal[1] - self.current_position[1]) ** 2)
+
         if self.state == "ROTATE_TO_GOAL":
-            # desired_orientation = [self.goal[0] - self.current_position[0], self.goal[1] - self.current_position[1]]
-            # norm = math.sqrt(desired_orientation[0] ** 2 + desired_orientation[1] ** 2)
-            # desired_orientation = [desired_orientation[0] / norm, desired_orientation[1] / norm]
-            # print("current position", self.current_position)
-            # print("update_state | current orientation = ", self.current_orientation, " desired_orientation = ", desired_orientation)
-            # # find angle between orientations
-            # dot_product = np.matmul(self.current_orientation, desired_orientation)
-            # theta = np.arccos(dot_product) * 180 / math.pi
-            theta = calculate_theta(self)
+            theta = self.calculate_theta()
             if 0 < theta < 25:
                 self.state = "MOVE_STRAIGHT"
         if self.state == "MOVE_STRAIGHT":
-            if -1 < self.front_sense < 40:
+            if -1 < self.front_sense < 40 and cur_dist > self.front_sense:
+                # in case the goal is closer than the object - ignore the object
+                self.follow_obj_left_arr = []
+                self.start_turning = False
+                self.get_far_from_obj = False
                 self.state = "FOLLOW_OBJ"
-            theta = calculate_theta(self)
+            theta = self.calculate_theta()
             if theta > 25:
                 self.state = "ROTATE_TO_GOAL"
         if self.state == "FOLLOW_OBJ":
             if self.object_start_dist == -1:
                 self.object_start_dist = math.sqrt(
                     (self.goal[0] - self.current_position[0]) ** 2 + (self.goal[1] - self.current_position[1]) ** 2)
-            cur_dist = math.sqrt(
-                (self.goal[0] - self.current_position[0]) ** 2 + (self.goal[1] - self.current_position[1]) ** 2)
-            if cur_dist < self.object_start_dist and (self.front_sense == -1 or self.front_sense > 70):
+            cross_product = self.calculate_cross_product()
+            if cur_dist < self.object_start_dist and (self.front_sense == -1 or self.front_sense > 70) and cross_product > 0:
+                self.object_start_dist = -1
+                self.state = "ROTATE_TO_GOAL"
+            # in case of U type object - if the goal is closer than the object - ignore the object
+            if cur_dist < self.left_sense:
                 self.object_start_dist = -1
                 self.state = "ROTATE_TO_GOAL"
         print("update_state | next state =", self.state)
@@ -106,27 +112,34 @@ class TangentBugs(object):
 
             # after done
             if self.update_map:
-                map.draw_map()
+                map.draw_map(self.map)
             self.RClient.terminate()
         else:
             print("Failed to connect")
 
+    def calculate_theta(self):
+        desired_orientation = [self.goal[0] - self.current_position[0], self.goal[1] - self.current_position[1]]
+        norm = math.sqrt(desired_orientation[0] ** 2 + desired_orientation[1] ** 2)
+        desired_orientation = [desired_orientation[0] / norm, desired_orientation[1] / norm]
+        print("current position", self.current_position)
+        print("update_state | current orientation = ", self.current_orientation, " desired_orientation = ",
+              desired_orientation)
+        # find angle between orientations
+        dot_product = np.matmul(self.current_orientation, desired_orientation)
+        theta = np.arccos(dot_product) * 180 / math.pi
+        print("update_state | dot product = ", dot_product, " theta =", theta)
+        return theta
 
-def calculate_theta(self):
-    desired_orientation = [self.goal[0] - self.current_position[0], self.goal[1] - self.current_position[1]]
-    norm = math.sqrt(desired_orientation[0] ** 2 + desired_orientation[1] ** 2)
-    desired_orientation = [desired_orientation[0] / norm, desired_orientation[1] / norm]
-    print("current position", self.current_position)
-    print("update_state | current orientation = ", self.current_orientation, " desired_orientation = ",
-          desired_orientation)
-    # find angle between orientations
-    dot_product = np.matmul(self.current_orientation, desired_orientation)
-    theta = np.arccos(dot_product) * 180 / math.pi
-    print("update_state | dot product = ", dot_product, " theta =", theta)
-    return theta
+    def calculate_cross_product(self):
+        desired_orientation = [self.goal[0] - self.current_position[0],
+                               self.goal[1] - self.current_position[1]]
+        norm = math.sqrt(desired_orientation[0] ** 2 + desired_orientation[1] ** 2)
+        desired_orientation = [desired_orientation[0] / norm, desired_orientation[1] / norm]
+        cross_product = np.cross(self.current_orientation, desired_orientation)
+        return cross_product
 
 
 if __name__ == '__main__':
-    algo = TangentBugs([0, -200], "192.168.1.153", update_map=False)
+    algo = TangentBugs([0, -200], "192.168.1.157", update_map=True)
     algo.solve()
     print("MISSION ACCOMPLISHED - GOAL REACHED")
