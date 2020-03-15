@@ -24,7 +24,7 @@ class TangentBugs(object):
         self.start_turning = False
         self.get_far_from_obj = False
 
-        self.goal_tolerance = 7
+        self.goal_tolerance = 5
 
         self.map = np.zeros([700, 380], dtype=int)
         self.update_map = update_map
@@ -33,7 +33,7 @@ class TangentBugs(object):
         counter = 0
         r_result = self.old_sense
         # while r_result != self.old_sense or counter > 10:
-        while (r_result == self.old_sense or r_result[0] == -9999) and counter < 10:
+        while (r_result == self.old_sense or r_result[0] == -9999) and counter < 20:
             r_result = self.RClient.sense()  # call sense only once
             while len(r_result) < 6:
                 r_result = self.RClient.sense()
@@ -112,7 +112,7 @@ class TangentBugs(object):
 
             # after done
             if self.update_map:
-                map.draw_map(self.map)
+                map.draw_map(self.map, self.goal)
             self.RClient.terminate()
         else:
             print("Failed to connect")
@@ -140,6 +140,6 @@ class TangentBugs(object):
 
 
 if __name__ == '__main__':
-    algo = TangentBugs([0, -200], "192.168.1.157", update_map=True)
+    algo = TangentBugs([100, -100], "192.168.1.156", update_map=True)
     algo.solve()
     print("MISSION ACCOMPLISHED - GOAL REACHED")

@@ -1,9 +1,13 @@
 from tangent_bugs import TangentBugs
 import math
 import numpy as np
+import time
 
 
 def rotate_to_goal(tangentBugs):
+    if tangentBugs.current_position[0] == -9999:
+        tangentBugs.RClient.drive(300, 300)
+        return
     desired_orientation = [tangentBugs.goal[0] - tangentBugs.current_position[0], tangentBugs.goal[1] - tangentBugs.current_position[1]]
     norm = math.sqrt(desired_orientation[0] ** 2 + desired_orientation[1] ** 2)
     desired_orientation = [desired_orientation[0] / norm, desired_orientation[1] / norm]
@@ -23,7 +27,16 @@ def move_straight(tangentBugs):
         print("move_straight | front: ", tangentBugs.front_sense, " left ", tangentBugs.left_sense, "right: ", tangentBugs.right_sense)
         print("move_straight | obstacle detected !")
         return
+    if tangentBugs.current_position[0] == -9999:
+        tangentBugs.RClient.drive(300, 300)
+        return
     # drive straight toward goal
+    if 0 < tangentBugs.left_sense < 30 and cur_dist > 50:
+        tangentBugs.RClient.drive(500, 0)
+        time.sleep(0.3)
+    elif 0 < tangentBugs.right_sense < 30 and cur_dist > 50:
+        tangentBugs.RClient.drive(0, 500)
+        time.sleep(0.3)
     desired_orientation = [tangentBugs.goal[0] - tangentBugs.current_position[0],
                            tangentBugs.goal[1] - tangentBugs.current_position[1]]
     norm = math.sqrt(desired_orientation[0] ** 2 + desired_orientation[1] ** 2)
@@ -37,9 +50,9 @@ def move_straight(tangentBugs):
     higher_speed = 450
     # lower_speed = higher_speed * (math.pi / 2 - theta) / (math.pi / 2)
     lower_speed = higher_speed * (90 - theta) / 90
-    lower_speed = min(lower_speed, 500)
+    lower_speed = min(lower_speed, higher_speed)
     lower_speed = max(lower_speed, 350)
-    if 0 < tangentBugs.front_sense < 100:
+    if 0 < tangentBugs.front_sense < 100 or cur_dist < 50:
         higher_speed = 300
         lower_speed = 300
     if cross_product > 0:
@@ -61,6 +74,7 @@ def follow_obj(tangentBugs):
         if tangentBugs.left_sense == -1:
             if tangentBugs.start_turning:  # one more drive straight to ovoid being too close to the edge
                 tangentBugs.start_turning = False
+                print("Start turning")
                 tangentBugs.RClient.drive(350, 350)
             else:
                 tangentBugs.follow_obj_left_arr = []
